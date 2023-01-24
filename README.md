@@ -1,1 +1,2 @@
 # dog-generator
+Hello all and welcome to my repository! It's a do checker app from a Mayanwolfe code tutorial that can be found <a href="https://youtu.be/rHnC-7h6338">here.</a> In this tutorial we work with work with the fetch API and async functionality. 

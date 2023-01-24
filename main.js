@@ -28,8 +28,15 @@ fetch(BREEDS_URL)
         console.log(event.target.value)
         let url = `https://dog.ceo/api/breed/${event.target.value}/images/random`
         //console.log(url);
-        getDoggoImg(url)
+        //call all object functions
+        getDoggoImg(url);
+        doggoInfo.assignMF();//also assigns name
+        doggoInfo.assignAge(); //give an age to the dog
+        doggoInfo.assignLikes();
+        doggoInfo.assignDislikes();
+        doggoInfo.assignFunFact();
 
+        
     })
 
     const img = document.querySelector('.dog-img')
@@ -37,7 +44,6 @@ fetch(BREEDS_URL)
     const getDoggoImg = url => {
         fetch(url) // going to API url above
             .then(res => {
-                console.log(res.json());//get JSON message back
                 return res.json();
             })
             .then(data => {
@@ -62,14 +68,61 @@ fetch(BREEDS_URL)
 
             assignMF() { // sex generator
                 x = (Math.floor(Math.random() * 2)===0) // randomly selects 1/0 or t/f
+                //console.log(x)
                 if(x) {
                     this.MF = "Female";
                     this.assignName(this.fNames)
                 } else {
-                    this.mf = "Male";
+                    this.MF = "Male";
                     this.assignName(this.mNames)
                 }
+                document.getElementById("MF").innerHTML = `${this.MF}`
             },
 
-            assignName(array)
+            assignName(array) { // get random element from an array
+                this.rname = array[Math.floor(Math.random()*array.length)];
+                document.getElementById("dog-name").innerHTML = `${this.rname}`
+            },
+
+            assignAge() {
+                this.age = Math.floor(Math.random() * 13) // assign random age 
+                //console.log(age)
+                document.getElementById('age').innerHTML = `Age: ${this.age}`
+
+            },
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            yatesShuffle(array) {// fisher yates shuffle: https://bost.ocks.org/mike/shuffle/
+                let m = array.length, t, i;
+                //While there remain elements to shuffle...
+                while (m) {
+                    // Pick a remaining element...
+                    i = Math.floor(Math.random() * m--);
+                    // And swap it with the current element.
+                    t = array[m];
+                    array[m] = array[i];
+                    array[i] = t;
+                }
+                return array;
+            },
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+                assignLikes() {
+                    this.likes = this.yatesShuffle(this.likesList).slice(0,2)
+                    document.getElementById('likes').innerHTML = `Likes: ${this.likes[0]}, ${this.likes[1]}`
+
+                },
+
+                assignDislikes() {
+                    this.dislikes = this.yatesShuffle(this.dislikesList).slice(0,2)
+                    document.getElementById('dislikes').innerHTML = `Dislikes: ${this.dislikes[0]}, ${this.dislikes[1]}`
+
+                },
+
+                assignFunFact() {
+                    this.fact = this.factList[Math.floor(Math.random() * this.factList.length)]
+                    document.getElementById('fun-fact').innerHTML = `Additional Info: ${this.fact}`
+
+                },
+            
+
         }
