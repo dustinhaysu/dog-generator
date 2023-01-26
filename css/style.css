@@ -1,8 +1,12 @@
+
+
+
+
+@media all and (max-width: 550px){
 html {
     font-family: 'Franklin Gothic Light', 'Arial Narrow', Arial, sans-serif;
-    background: linear-gradient(lightyellow, orange);
-    height: 100vh;
-    margin: auto;
+    background: linear-gradient(lightblue, green);
+    padding-bottom: 100px;
 }
 
 header {
@@ -11,23 +15,20 @@ header {
 }
 
 select {
+    margin-top: 5px;
     font-size: 1.1rem;
 
 }
 
 .section-container {
-    display: flex;
-    flex-direction: row;
+
     padding-left: 10vw;
     padding-right: 10vw;
 
 }
 
-.column {
-    flex: 1;
-}
-
 img {
+    padding: 15px 0;
     max-width: 100%;
     height: auto;
   }
@@ -47,8 +48,72 @@ img {
 #left-column {
     text-align: center;
 }
+
+/* .breeds {
+    margin-top: 5px;
+} */
 /*to style list items or remove list item styling 
 
 ul li {
     list-style: none;
 } */
+}
+
+@media all and (min-width: 551px){
+    html {
+        font-family: 'Franklin Gothic Light', 'Arial Narrow', Arial, sans-serif;
+        background: linear-gradient(lightblue, green);
+        height: 100vh;
+        margin: auto;
+    }
+    
+    header {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    
+    select {
+        margin-top: 5px;
+        font-size: 1.1rem;
+    
+    }
+    
+    .section-container {
+        display: flex;
+        flex-direction: row;
+        padding-left: 10vw;
+        padding-right: 10vw;
+    
+    }
+    
+    .column {
+        flex: 1;
+    }
+    
+    img {
+        margin: 15px;
+        max-width: 80%;
+        height: auto;
+      }
+    
+      span {
+        font-weight: bold;
+        text-decoration: underline;
+        font-size: 1.3rem;
+      }
+    
+    
+    #dog-name {
+        font-size: 2rem;
+        text-decoration: none;
+    }
+    
+    #left-column {
+        text-align: center;
+    }
+    /*to style list items or remove list item styling 
+    
+    ul li {
+        list-style: none;
+    } */
+    }

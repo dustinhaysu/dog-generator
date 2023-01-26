@@ -4,6 +4,7 @@
 const BREEDS_URL = 'https://dog.ceo/api/breeds/list/all'
 
 const select = document.querySelector('.breeds')
+const link = document.querySelector('#link')
 
 fetch(BREEDS_URL)
     .then(res => {
@@ -16,28 +17,70 @@ fetch(BREEDS_URL)
 
         for (i=0; i<breedsArray.length; i++){
         const option = document.createElement('option')//<option></option>
+        //option.className = "option"
         option.value = breedsArray[i] //<option value='breed'> value attribute, which specifies a value that is submitted when that menu item is selected
         option.innerText = breedsArray[i] //  <option value = 'breed'>breed</option> rendered text content of option i.e pugS
         select.appendChild(option) //adds current <option> tag to the select box list of options
-    }      
-        //console.log(breedsArray)
-        //console.log(breedsObject)
+    }    
+          
+        console.log(breedsArray)
+        console.log(breedsObject)
     })
-
+let breed = ""
+let url = ""
     select.addEventListener('change', event => {
-        console.log(event.target.value)
-        let url = `https://dog.ceo/api/breed/${event.target.value}/images/random`
+        //console.log(event.target.value)
+         breed = event.target.value
+        //console.log(breed)
+         url = `https://dog.ceo/api/breed/${event.target.value}/images/random`
+        if(event.target.value === 'starter') {
+            location.reload()
+            return
+        } 
+        
         //console.log(url);
         //call all object functions
         getDoggoImg(url);
+        getBreed(breed);
         doggoInfo.assignMF();//also assigns name
         doggoInfo.assignAge(); //give an age to the dog
         doggoInfo.assignLikes();
         doggoInfo.assignDislikes();
         doggoInfo.assignFunFact();
-
-        
+        hitMeAgain()
+                
     })
+
+    link.addEventListener('click', event => {
+        getDoggoImg(url);
+        getBreed(breed);
+        doggoInfo.assignMF();//also assigns name
+        doggoInfo.assignAge(); //give an age to the dog
+        doggoInfo.assignLikes();
+        doggoInfo.assignDislikes();
+        doggoInfo.assignFunFact();
+    })
+
+    function hitMeAgain() {
+          document.getElementById('link').innerHTML = ''        
+        // Create element.
+        var button = document.createElement('button'); 
+          
+        // Create the text node for anchor element.
+        var text = document.createTextNode("Hit me again!");
+          
+        // Append the text node to anchor element.
+        button.appendChild(text); 
+          
+        // Set the title.
+        button.title = "This is Link"; 
+          
+    
+          
+        // Append the anchor element to the body.
+        document.getElementById('link').appendChild(button); 
+    }
+
 
     const img = document.querySelector('.dog-img')
 
@@ -45,12 +88,20 @@ fetch(BREEDS_URL)
         fetch(url) // going to API url above
             .then(res => {
                 return res.json();
+                console.log(res.json)
             })
             .then(data => {
                 img.src = data.message//extract message from JSON and attach to img tag as new source
-                //console.log(data.message)
+                console.log(data.message)
             })
         }
+
+        const getBreed = breed => {
+            document.getElementById('dog-breed').innerHTML = `Breed: ${breed}`
+        }
+    
+
+
 
         const doggoInfo = {
             fNames: ['Abby',	'Addie',	'Alexis',	'Alice',	'Allie',	'Alyssa',	'Amber',	'Angel',	'Anna',	'Annie',	'Ariel',	'Ashley',	'Aspen',	'Athena',	'Autumn',	'Ava',	'Avery',	'Baby',	'Bailey',	'Basil',	'Bean',	'Bella',	'Belle',	'Betsy',	'Betty',	'Bianca',	'Birdie',	'Biscuit',	'Blondie',	'Blossom',	'Bonnie',	'Brandy',	'Brooklyn',	'Brownie',	'Buffy',	'Callie',	'Camilla',	'Candy',	'Carla',	'Carly',	'Carmela',	'Casey',	'Cassie',	'Chance',	'Chanel',	'Chloe',	'Cinnamon',	'Cleo',	'Coco',	'Cookie',	'Cricket',	'Daisy',	'Dakota',	'Dana',	'Daphne',	'Darla',	'Darlene',	'Delia',	'Delilah',	'Destiny',	'Diamond',	'Diva',	'Dixie',	'Dolly',	'Duchess',	'Eden',	'Edie',	'Ella',	'Ellie',	'Elsa',	'Emma',	'Emmy',	'Eva',	'Faith',	'Fanny',	'Fern',	'Fiona',	'Foxy',	'Gabby',	'Gemma',	'Georgia',	'Gia',	'Gidget',	'Gigi',	'Ginger',	'Goldie',	'Grace',	'Gracie',	'Greta',	'Gypsy',	'Hailey',	'Hannah',	'Harley',	'Harper',	'Hazel',	'Heidi',	'Hershey',	'Holly',	'Honey',	'Hope',	'Ibby',	'Inez',	'Isabella',	'Ivy',	'Izzy',	'Jackie',	'Jada',	'Jade',	'Jasmine',	'Jenna',	'Jersey',	'Jessie',	'Jill',	'Josie',	'Julia',	'Juliet',	'Juno',	'Kali',	'Kallie',	'Karma',	'Kate',	'Katie',	'Kayla',	'Kelsey',	'Khloe',	'Kiki',	'Kira',	'Koko',	'Kona',	'Lacy',	'Lady',	'Layla',	'Leia',	'Lena',	'Lexi',	'Libby',	'Liberty',	'Lily',	'Lizzy',	'Lola',	'London',	'Lucky',	'Lulu',	'Luna',	'Mabel',	'Mackenzie',	'Macy',	'Maddie',	'Madison',	'Maggie',	'Maisy',	'Mandy',	'Marley',	'Matilda',	'Mattie',	'Maya',	'Mia',	'Mika',	'Mila',	'Miley',	'Millie',	'Mimi',	'Minnie',	'Missy',	'Misty',	'Mitzi',	'Mocha',	'Molly',	'Morgan',	'Moxie',	'Muffin',	'Mya',	'Nala',	'Nell',	'Nellie',	'Nikki',	'Nina',	'Noel',	'Nola',	'Nori',	'Olive',	'Olivia',	'Oreo',	'Paisley',	'Pandora',	'Paris',	'Peaches',	'Peanut',	'Pearl',	'Pebbles',	'Penny',	'Pepper',	'Phoebe',	'Piper',	'Pippa',	'Pixie',	'Polly',	'Poppy',	'Precious',	'Princess',	'Priscilla',	'Raven',	'Reese',	'Riley',	'Rose',	'Rosie',	'Roxy',	'Ruby',	'Sadie',	'Sage',	'Sally',	'Sam',	'Samantha',	'Sammie',	'Sandy',	'Sasha',	'Sassy',	'Savannah',	'Scarlet',	'Shadow',	'Sheba',	'Shelby',	'Shiloh',	'Sierra',	'Sissy',	'Sky',	'Smokey',	'Snickers',	'Sophia',	'Sophie',	'Star',	'Stella',	'Sugar',	'Suki',	'Summer',	'Sunny',	'Sweetie',	'Sydney',	'Tasha',	'Tessa',	'Tilly',	'Tootsie',	'Trixie',	'Violet',	'Willow',	'Winnie',	'Xena',	'Zelda',	'Zoe'],
