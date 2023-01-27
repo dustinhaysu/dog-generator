@@ -1,10 +1,24 @@
 // dog ceo api  https://dog.ceo/dog-api
 
-
+// global variables
 const BREEDS_URL = 'https://dog.ceo/api/breeds/list/all'
 
 const select = document.querySelector('.breeds')
 const link = document.querySelector('#link')
+const img = document.getElementById('dog-img')
+//const dogs = []
+let count = -2
+
+// arrays for tracking through our dogs
+const images = [];//
+const breeds = [];//
+const dogSexes = [];//
+const ages = [];//
+const dogLikes = [];//
+const dogDislikes = [];
+const dogInfos = [];
+
+
 
 fetch(BREEDS_URL)
     .then(res => {
@@ -23,81 +37,177 @@ fetch(BREEDS_URL)
         select.appendChild(option) //adds current <option> tag to the select box list of options
     }    
           
-        console.log(breedsArray)
-        console.log(breedsObject)
+        //console.log(breedsArray)
+        //console.log(breedsObject)
     })
-let breed = ""
+//let breed = ""
 let url = ""
     select.addEventListener('change', event => {
         //console.log(event.target.value)
-         breed = event.target.value
+         breeds.push(event.target.value)
         //console.log(breed)
          url = `https://dog.ceo/api/breed/${event.target.value}/images/random`
+
         if(event.target.value === 'starter') {
-            location.reload()
+            document.querySelector('img').setAttribute('src', 'corgi_default.jpg');
+            document.getElementById('dog-breed').innerHTML = `Breed: corgi`;
+            document.getElementById('MF').innerHTML =`S: Male` ;
+            document.getElementById('age').innerHTML= `Age: 2` ;
+            document.getElementById('likes').innerHTML='Likes: Ham, String Cheese';
+            document.getElementById('dislikes').innerHTML='Dislikes: Baths, Entropy';
+            document.getElementById('fun-fact').innerHTML='Additional Info: On every walk, has to visit that one spot where they found a piece of cheese on the ground six months ago.';
+            document.getElementById('link').innerHTML = ''
+           
             return
         } 
         
         //console.log(url);
         //call all object functions
         getDoggoImg(url);
-        getBreed(breed);
+        getBreed();
         doggoInfo.assignMF();//also assigns name
         doggoInfo.assignAge(); //give an age to the dog
         doggoInfo.assignLikes();
         doggoInfo.assignDislikes();
         doggoInfo.assignFunFact();
         hitMeAgain()
+        count = images.length -1
+        buttonDownBuild()
+        buttonUpBuild()
+        console.log(count)
                 
     })
-
+  
     link.addEventListener('click', event => {
         getDoggoImg(url);
-        getBreed(breed);
+        getBreed();
         doggoInfo.assignMF();//also assigns name
         doggoInfo.assignAge(); //give an age to the dog
         doggoInfo.assignLikes();
         doggoInfo.assignDislikes();
         doggoInfo.assignFunFact();
+        count = images.length -1
+        buttonDownBuild()
     })
 
     function hitMeAgain() {
+        //clear inner html
           document.getElementById('link').innerHTML = ''        
         // Create element.
-        var button = document.createElement('button'); 
+        let button = document.createElement('button'); 
           
         // Create the text node for anchor element.
-        var text = document.createTextNode("Hit me again!");
+        let text = document.createTextNode("Hit me again!");
           
         // Append the text node to anchor element.
         button.appendChild(text); 
           
         // Set the title.
-        button.title = "This is Link"; 
-          
-    
+        //button.title = "This is Link"; 
           
         // Append the anchor element to the body.
         document.getElementById('link').appendChild(button); 
     }
 
 
-    const img = document.querySelector('.dog-img')
+    function buttonDownBuild() {
+          document.getElementById('button-down').innerHTML = ''        
+        let button = document.createElement('button'); 
+        let text = document.createTextNode("⬅️");
+        button.appendChild(text);           
+        document.getElementById('button-down').appendChild(button); 
+    }
+
+
+    function buttonUpBuild() {
+          document.getElementById('button-up').innerHTML = '' 
+        let button = document.createElement('button'); 
+        let text = document.createTextNode("➡️");
+        button.appendChild(text); 
+        document.getElementById('button-up').appendChild(button); 
+    }
+// scroll back through browser memory
+        const buttonDown = document.getElementById('button-down')
+        buttonDown.addEventListener('click', event => {
+        if(count < 0){
+            document.querySelector('img').setAttribute('src', 'corgi_default.jpg');
+            document.getElementById('dog-breed').innerHTML = `Breed: corgi`;
+            document.getElementById('MF').innerHTML =`S: Male` ;
+            document.getElementById('age').innerHTML= `Age: 2` ;
+            document.getElementById('likes').innerHTML='Likes: Ham, String Cheese';
+            document.getElementById('dislikes').innerHTML='Dislikes: Baths, Entropy';
+            document.getElementById('fun-fact').innerHTML='Additional Info: On every walk, has to visit that one spot where they found a piece of cheese on the ground six months ago.';         
+           
+            return
+
+         } else if(count>=0){
+            count--
+        img.src = images[count];
+        document.getElementById('dog-breed').innerHTML = `${breeds[count]}`;
+        document.getElementById('MF').innerHTML = `${dogSexes[count]}`;
+        document.getElementById('age').innerHTML = `${ages[count]}`;
+        document.getElementById('likes').innerHTML = `${dogLikes[count]}`;
+        document.getElementById('dislikes').innerHTML = `${dogDislikes[count]}`;
+        document.getElementById('fun-fact').innerHTML = `${dogInfos[count]}`;
+
+    } if (count ===-1){
+        img.src = images[0];
+        document.getElementById('dog-breed').innerHTML = `${breeds[0]}`;
+        document.getElementById('MF').innerHTML = `${dogSexes[0]}`;
+        document.getElementById('age').innerHTML = `${ages[0]}`;
+        document.getElementById('likes').innerHTML = `${dogLikes[0]}`;
+        document.getElementById('dislikes').innerHTML = `${dogDislikes[0]}`;
+        document.getElementById('fun-fact').innerHTML = `${dogInfos[0]}`;
+    }
+        })
+
+//scroll up through browser memory
+        const buttonUp = document.getElementById('button-up')
+        buttonUp.addEventListener('click', event => {
+            if(count === images.length-1 || count === -2){
+                return
+            }else if (count<0){
+                count = 0
+                //console.log(count, 'second if')
+                img.src=images[count]
+                document.getElementById('dog-breed').innerHTML = `${breeds[count]}`;
+                document.getElementById('MF').innerHTML = `${dogSexes[count]}`;
+                document.getElementById('age').innerHTML = `${ages[count]}`;
+                document.getElementById('likes').innerHTML = `${dogLikes[count]}`;
+                document.getElementById('dislikes').innerHTML = `${dogDislikes[count]}`;
+                document.getElementById('fun-fact').innerHTML = `${dogInfos[count]}`;
+            } else {
+                count++
+                img.src = images[count]
+                document.getElementById('dog-breed').innerHTML = `${breeds[count]}`;
+                document.getElementById('MF').innerHTML = `${dogSexes[count]}`;
+                document.getElementById('age').innerHTML = `${ages[count]}`;
+                document.getElementById('likes').innerHTML = `${dogLikes[count]}`;
+                document.getElementById('dislikes').innerHTML = `${dogDislikes[count]}`;
+                document.getElementById('fun-fact').innerHTML = `${dogInfos[count]}`;               
+                //console.log(count, 'third if')
+            }
+            
+        })
+    
+
 
     const getDoggoImg = url => {
         fetch(url) // going to API url above
             .then(res => {
                 return res.json();
-                console.log(res.json)
+                //console.log(res.json)
             })
             .then(data => {
-                img.src = data.message//extract message from JSON and attach to img tag as new source
-                console.log(data.message)
+                images.push(data.message)
+                img.src = images[images.length-1]
+                //img.src = data.message//extract message from JSON and attach to img tag as new source
+                console.log(images)
             })
         }
 
-        const getBreed = breed => {
-            document.getElementById('dog-breed').innerHTML = `Breed: ${breed}`
+        const getBreed =() => {
+            document.getElementById('dog-breed').innerHTML = `Breed: ${breeds[breeds.length-1]}`
         }
     
 
@@ -122,9 +232,11 @@ let url = ""
                 //console.log(x)
                 if(x) {
                     this.MF = "Female";
+                    dogSexes.push('Female')
                     this.assignName(this.fNames)
                 } else {
                     this.MF = "Male";
+                    dogSexes.push('Male')
                     this.assignName(this.mNames)
                 }
                 document.getElementById("MF").innerHTML = `${this.MF}`
@@ -136,7 +248,8 @@ let url = ""
             },
 
             assignAge() {
-                this.age = Math.floor(Math.random() * 13) // assign random age 
+                this.age = Math.floor(Math.random() * 10) +1 // assign random age 
+                ages.push(this.age)
                 //console.log(age)
                 document.getElementById('age').innerHTML = `Age: ${this.age}`
 
@@ -160,20 +273,25 @@ let url = ""
                 assignLikes() {
                     this.likes = this.yatesShuffle(this.likesList).slice(0,2)
                     document.getElementById('likes').innerHTML = `Likes: ${this.likes[0]}, ${this.likes[1]}`
+                    dogLikes.push(`Likes: ${this.likes[0]}, ${this.likes[1]}`)
 
                 },
 
                 assignDislikes() {
                     this.dislikes = this.yatesShuffle(this.dislikesList).slice(0,2)
                     document.getElementById('dislikes').innerHTML = `Dislikes: ${this.dislikes[0]}, ${this.dislikes[1]}`
+                    dogDislikes.push(`Dislikes: ${this.dislikes[0]}, ${this.dislikes[1]}`)
 
                 },
 
                 assignFunFact() {
                     this.fact = this.factList[Math.floor(Math.random() * this.factList.length)]
                     document.getElementById('fun-fact').innerHTML = `Additional Info: ${this.fact}`
+                    dogInfos.push(`Additional Info: ${this.fact}`)
 
                 },
             
 
         }
+
+        
