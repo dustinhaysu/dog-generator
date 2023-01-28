@@ -235,6 +235,7 @@ function paragraphNew() {
 //post breed to DOM
         const getBreed =() => {
             breeds.push(`Breed: ${breed}`)
+            document.getElementById('dog-breed').innerHTML = ''
             document.getElementById('dog-breed').innerHTML = `Breed: ${breeds[breeds.length-1]}`
         }
     
