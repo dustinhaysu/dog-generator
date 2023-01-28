@@ -7,7 +7,7 @@ html {
     font-family: 'Franklin Gothic Light', 'Arial Narrow', Arial, sans-serif;
     background: linear-gradient(lightblue, green);
     padding-bottom: 10px;
-    height: 200vh;
+    height: 300vh;
 }
 
 header {
@@ -79,7 +79,7 @@ ul li {
         font-family: 'Franklin Gothic Light', 'Arial Narrow', Arial, sans-serif;
         background: linear-gradient(lightblue, green);
         padding-bottom: 10px;
-        height: 150vh
+        height: 200vh
     }
     
     header {
