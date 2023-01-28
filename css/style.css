@@ -2,11 +2,12 @@
 
 
 
-@media all and (max-width: 550px){
+@media all and (max-width: 650px){
 html {
     font-family: 'Franklin Gothic Light', 'Arial Narrow', Arial, sans-serif;
     background: linear-gradient(lightblue, green);
-    padding-bottom: 100px;
+    padding-bottom: 10px;
+    height: 200vh;
 }
 
 header {
@@ -49,6 +50,18 @@ img {
     text-align: center;
 }
 
+#paragraph {
+    width: 90%;
+    margin: auto;
+}
+
+button {
+    background-color: lightgreen;
+    font-size: 4vw;
+
+}
+
+
 /* .breeds {
     margin-top: 5px;
 } */
@@ -59,12 +72,12 @@ ul li {
 } */
 }
 
-@media all and (min-width: 551px){
+@media all and (min-width: 651px){
     html {
         font-family: 'Franklin Gothic Light', 'Arial Narrow', Arial, sans-serif;
         background: linear-gradient(lightblue, green);
-        height: 100vh;
-        margin: auto;
+        padding-bottom: 10px;
+        height: 150vh
     }
     
     header {
@@ -110,6 +123,11 @@ ul li {
     
     #left-column {
         text-align: center;
+    }
+
+    #paragraph {
+        width: 90%;
+        margin: auto;
     }
     /*to style list items or remove list item styling 
     

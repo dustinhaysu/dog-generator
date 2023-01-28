@@ -6,11 +6,12 @@ const BREEDS_URL = 'https://dog.ceo/api/breeds/list/all'
 const select = document.querySelector('.breeds')
 const link = document.querySelector('#link')
 const img = document.getElementById('dog-img')
-//const dogs = []
+let url = ""
 let count = -2
 
 // arrays for tracking through our dogs
 const images = [];//
+const names = [];
 const breeds = [];//
 const dogSexes = [];//
 const ages = [];//
@@ -40,8 +41,7 @@ fetch(BREEDS_URL)
         //console.log(breedsArray)
         //console.log(breedsObject)
     })
-//let breed = ""
-let url = ""
+
     select.addEventListener('change', event => {
         //console.log(event.target.value)
          breeds.push(event.target.value)
@@ -49,14 +49,15 @@ let url = ""
          url = `https://dog.ceo/api/breed/${event.target.value}/images/random`
 
         if(event.target.value === 'starter') {
+            document.getElementById('dog-name').innerHTML = 'Dougie the Doggie';
             document.querySelector('img').setAttribute('src', 'corgi_default.jpg');
             document.getElementById('dog-breed').innerHTML = `Breed: corgi`;
-            document.getElementById('MF').innerHTML =`S: Male` ;
-            document.getElementById('age').innerHTML= `Age: 2` ;
+            document.getElementById('MF').innerHTML =`Male` ;
             document.getElementById('likes').innerHTML='Likes: Ham, String Cheese';
             document.getElementById('dislikes').innerHTML='Dislikes: Baths, Entropy';
             document.getElementById('fun-fact').innerHTML='Additional Info: On every walk, has to visit that one spot where they found a piece of cheese on the ground six months ago.';
             document.getElementById('link').innerHTML = ''
+            document.getElementById('paragraph').innerHTML = 'Do you want to ogle dogs until your head explodes? Then you have come to the right place! This website generates dog pictures with simple bios. To get things started click the "select me!" dropdown box and choose a breed. Have fun and if you want to check out my profile <a href="https://dustin-hays.netlify.app/">click here</a>!'
            
             return
         } 
@@ -66,15 +67,16 @@ let url = ""
         getDoggoImg(url);
         getBreed();
         doggoInfo.assignMF();//also assigns name
-        doggoInfo.assignAge(); //give an age to the dog
+        //doggoInfo.assignAge(); //give an age to the dog
         doggoInfo.assignLikes();
         doggoInfo.assignDislikes();
         doggoInfo.assignFunFact();
         hitMeAgain()
-        count = images.length -1
         buttonDownBuild()
         buttonUpBuild()
-        console.log(count)
+        paragraphNew()
+        count = breeds.length-1
+        //console.log(count, names[count])
                 
     })
   
@@ -82,14 +84,18 @@ let url = ""
         getDoggoImg(url);
         getBreed();
         doggoInfo.assignMF();//also assigns name
-        doggoInfo.assignAge(); //give an age to the dog
         doggoInfo.assignLikes();
         doggoInfo.assignDislikes();
         doggoInfo.assignFunFact();
-        count = images.length -1
-        buttonDownBuild()
+        count = breeds.length-1
+        //buttonDownBuild()
     })
 
+//paragraph build
+function paragraphNew() {
+    document.getElementById('paragraph').innerHTML = 'This site does not use cookies or a database. If you exit the app or refresh the page all your information will be lost.  consider yourself informed! If you would like to see my portfolio <a href="https://dustin-hays.netlify.app/">click here</a>.'
+}
+// this breed again button build
     function hitMeAgain() {
         //clear inner html
           document.getElementById('link').innerHTML = ''        
@@ -97,7 +103,7 @@ let url = ""
         let button = document.createElement('button'); 
           
         // Create the text node for anchor element.
-        let text = document.createTextNode("Hit me again!");
+        let text = document.createTextNode("This Breed Again");
           
         // Append the text node to anchor element.
         button.appendChild(text); 
@@ -129,37 +135,45 @@ let url = ""
 // scroll back through browser memory
         const buttonDown = document.getElementById('button-down')
         buttonDown.addEventListener('click', event => {
-        if(count < 0){
+            if(count>0){
+            count--
+            document.getElementById('dog-name').innerHTML = `${names[count]}`   
+            img.src = images[count];
+            document.getElementById('dog-breed').innerHTML = `${breeds[count]}`;
+            document.getElementById('MF').innerHTML = `${dogSexes[count]}`;
+            document.getElementById('likes').innerHTML = `${dogLikes[count]}`;
+            document.getElementById('dislikes').innerHTML = `${dogDislikes[count]}`;
+            document.getElementById('fun-fact').innerHTML = `${dogInfos[count]}`;
+            
+    
+         } else if (images[0]){
+            count = 0
+            document.getElementById('dog-name').innerHTML = `${names[0]}`
+            img.src = images[0];
+            document.getElementById('dog-breed').innerHTML = `${breeds[0]}`;
+            document.getElementById('MF').innerHTML = `${dogSexes[0]}`;
+            document.getElementById('likes').innerHTML = `${dogLikes[0]}`;
+            document.getElementById('dislikes').innerHTML = `${dogDislikes[0]}`;
+            document.getElementById('fun-fact').innerHTML = `${dogInfos[0]}`;
+            count--
+            
+             }           
+        
+        if(images[count - 1] === images[count]){
+            count = -1
+            document.getElementById('dog-name').innerHTML = 'Dougie the Doggie'
             document.querySelector('img').setAttribute('src', 'corgi_default.jpg');
             document.getElementById('dog-breed').innerHTML = `Breed: corgi`;
             document.getElementById('MF').innerHTML =`S: Male` ;
-            document.getElementById('age').innerHTML= `Age: 2` ;
             document.getElementById('likes').innerHTML='Likes: Ham, String Cheese';
             document.getElementById('dislikes').innerHTML='Dislikes: Baths, Entropy';
             document.getElementById('fun-fact').innerHTML='Additional Info: On every walk, has to visit that one spot where they found a piece of cheese on the ground six months ago.';         
            
             return
 
-         } else if(count>=0){
-            count--
-        img.src = images[count];
-        document.getElementById('dog-breed').innerHTML = `${breeds[count]}`;
-        document.getElementById('MF').innerHTML = `${dogSexes[count]}`;
-        document.getElementById('age').innerHTML = `${ages[count]}`;
-        document.getElementById('likes').innerHTML = `${dogLikes[count]}`;
-        document.getElementById('dislikes').innerHTML = `${dogDislikes[count]}`;
-        document.getElementById('fun-fact').innerHTML = `${dogInfos[count]}`;
-
-    } if (count ===-1){
-        img.src = images[0];
-        document.getElementById('dog-breed').innerHTML = `${breeds[0]}`;
-        document.getElementById('MF').innerHTML = `${dogSexes[0]}`;
-        document.getElementById('age').innerHTML = `${ages[0]}`;
-        document.getElementById('likes').innerHTML = `${dogLikes[0]}`;
-        document.getElementById('dislikes').innerHTML = `${dogDislikes[0]}`;
-        document.getElementById('fun-fact').innerHTML = `${dogInfos[0]}`;
-    }
-        })
+         } 
+        
+      })
 
 //scroll up through browser memory
         const buttonUp = document.getElementById('button-up')
@@ -169,19 +183,30 @@ let url = ""
             }else if (count<0){
                 count = 0
                 //console.log(count, 'second if')
+                document.getElementById('dog-name').innerHTML = `${names[count]}`
                 img.src=images[count]
                 document.getElementById('dog-breed').innerHTML = `${breeds[count]}`;
                 document.getElementById('MF').innerHTML = `${dogSexes[count]}`;
-                document.getElementById('age').innerHTML = `${ages[count]}`;
                 document.getElementById('likes').innerHTML = `${dogLikes[count]}`;
                 document.getElementById('dislikes').innerHTML = `${dogDislikes[count]}`;
                 document.getElementById('fun-fact').innerHTML = `${dogInfos[count]}`;
+            } else if (count === 0){
+                count = 1;
+                document.getElementById('dog-name').innerHTML = `${names[count]}`
+                img.src=images[count]
+                document.getElementById('dog-breed').innerHTML = `${breeds[count]}`;
+                document.getElementById('MF').innerHTML = `${dogSexes[count]}`;
+                document.getElementById('likes').innerHTML = `${dogLikes[count]}`;
+                document.getElementById('dislikes').innerHTML = `${dogDislikes[count]}`;
+                document.getElementById('fun-fact').innerHTML = `${dogInfos[count]}`;
+
+
             } else {
                 count++
+                document.getElementById('dog-name').innerHTML = `${names[count]}`
                 img.src = images[count]
                 document.getElementById('dog-breed').innerHTML = `${breeds[count]}`;
                 document.getElementById('MF').innerHTML = `${dogSexes[count]}`;
-                document.getElementById('age').innerHTML = `${ages[count]}`;
                 document.getElementById('likes').innerHTML = `${dogLikes[count]}`;
                 document.getElementById('dislikes').innerHTML = `${dogDislikes[count]}`;
                 document.getElementById('fun-fact').innerHTML = `${dogInfos[count]}`;               
@@ -191,7 +216,7 @@ let url = ""
         })
     
 
-
+// fetch image
     const getDoggoImg = url => {
         fetch(url) // going to API url above
             .then(res => {
@@ -205,14 +230,14 @@ let url = ""
                 console.log(images)
             })
         }
-
+//post breed to DOM
         const getBreed =() => {
             document.getElementById('dog-breed').innerHTML = `Breed: ${breeds[breeds.length-1]}`
         }
     
 
 
-
+// mayanwolfes object
         const doggoInfo = {
             fNames: ['Abby',	'Addie',	'Alexis',	'Alice',	'Allie',	'Alyssa',	'Amber',	'Angel',	'Anna',	'Annie',	'Ariel',	'Ashley',	'Aspen',	'Athena',	'Autumn',	'Ava',	'Avery',	'Baby',	'Bailey',	'Basil',	'Bean',	'Bella',	'Belle',	'Betsy',	'Betty',	'Bianca',	'Birdie',	'Biscuit',	'Blondie',	'Blossom',	'Bonnie',	'Brandy',	'Brooklyn',	'Brownie',	'Buffy',	'Callie',	'Camilla',	'Candy',	'Carla',	'Carly',	'Carmela',	'Casey',	'Cassie',	'Chance',	'Chanel',	'Chloe',	'Cinnamon',	'Cleo',	'Coco',	'Cookie',	'Cricket',	'Daisy',	'Dakota',	'Dana',	'Daphne',	'Darla',	'Darlene',	'Delia',	'Delilah',	'Destiny',	'Diamond',	'Diva',	'Dixie',	'Dolly',	'Duchess',	'Eden',	'Edie',	'Ella',	'Ellie',	'Elsa',	'Emma',	'Emmy',	'Eva',	'Faith',	'Fanny',	'Fern',	'Fiona',	'Foxy',	'Gabby',	'Gemma',	'Georgia',	'Gia',	'Gidget',	'Gigi',	'Ginger',	'Goldie',	'Grace',	'Gracie',	'Greta',	'Gypsy',	'Hailey',	'Hannah',	'Harley',	'Harper',	'Hazel',	'Heidi',	'Hershey',	'Holly',	'Honey',	'Hope',	'Ibby',	'Inez',	'Isabella',	'Ivy',	'Izzy',	'Jackie',	'Jada',	'Jade',	'Jasmine',	'Jenna',	'Jersey',	'Jessie',	'Jill',	'Josie',	'Julia',	'Juliet',	'Juno',	'Kali',	'Kallie',	'Karma',	'Kate',	'Katie',	'Kayla',	'Kelsey',	'Khloe',	'Kiki',	'Kira',	'Koko',	'Kona',	'Lacy',	'Lady',	'Layla',	'Leia',	'Lena',	'Lexi',	'Libby',	'Liberty',	'Lily',	'Lizzy',	'Lola',	'London',	'Lucky',	'Lulu',	'Luna',	'Mabel',	'Mackenzie',	'Macy',	'Maddie',	'Madison',	'Maggie',	'Maisy',	'Mandy',	'Marley',	'Matilda',	'Mattie',	'Maya',	'Mia',	'Mika',	'Mila',	'Miley',	'Millie',	'Mimi',	'Minnie',	'Missy',	'Misty',	'Mitzi',	'Mocha',	'Molly',	'Morgan',	'Moxie',	'Muffin',	'Mya',	'Nala',	'Nell',	'Nellie',	'Nikki',	'Nina',	'Noel',	'Nola',	'Nori',	'Olive',	'Olivia',	'Oreo',	'Paisley',	'Pandora',	'Paris',	'Peaches',	'Peanut',	'Pearl',	'Pebbles',	'Penny',	'Pepper',	'Phoebe',	'Piper',	'Pippa',	'Pixie',	'Polly',	'Poppy',	'Precious',	'Princess',	'Priscilla',	'Raven',	'Reese',	'Riley',	'Rose',	'Rosie',	'Roxy',	'Ruby',	'Sadie',	'Sage',	'Sally',	'Sam',	'Samantha',	'Sammie',	'Sandy',	'Sasha',	'Sassy',	'Savannah',	'Scarlet',	'Shadow',	'Sheba',	'Shelby',	'Shiloh',	'Sierra',	'Sissy',	'Sky',	'Smokey',	'Snickers',	'Sophia',	'Sophie',	'Star',	'Stella',	'Sugar',	'Suki',	'Summer',	'Sunny',	'Sweetie',	'Sydney',	'Tasha',	'Tessa',	'Tilly',	'Tootsie',	'Trixie',	'Violet',	'Willow',	'Winnie',	'Xena',	'Zelda',	'Zoe'],
             mNames: ['Abe',	'Abbott',	'Ace',	'Aero',	'Aiden',	'AJ',	'Albert',	'Alden',	'Alex',	'Alfie',	'Alvin',	'Amos',	'Andy',	'Angus',	'Apollo',	'Archie',	'Aries',	'Artie',	'Ash',	'Austin',	'Axel',	'Bailey',	'Bandit',	'Barkley',	'Barney',	'Baron',	'Baxter',	'Bear',	'Beau',	'Benji',	'Benny',	'Bentley',	'Billy',	'Bingo',	'Blake',	'Blaze',	'Blue',	'Bo',	'Boomer',	'Brady',	'Brody',	'Brownie',	'Bruce',	'Bruno',	'Brutus',	'Bubba',	'Buck',	'Buddy',	'Buster',	'Butch',	'Buzz',	'Cain',	'Captain',	'Carter',	'Cash',	'Casper',	'Champ',	'Chance',	'Charlie',	'Chase',	'Chester',	'Chewy',	'Chico',	'Chief',	'Chip',	'CJ',	'Clifford',	'Clyde',	'Coco',	'Cody',	'Colby',	'Cooper',	'Copper',	'Damien',	'Dane',	'Dante',	'Denver',	'Dexter',	'Diego',	'Diesel',	'Dodge',	'Drew',	'Duke',	'Dylan',	'Eddie',	'Eli',	'Elmer',	'Emmett',	'Evan',	'Felix',	'Finn',	'Fisher',	'Flash',	'Frankie',	'Freddy',	'Fritz',	'Gage',	'George',	'Gizmo',	'Goose',	'Gordie',	'Griffin',	'Gunner',	'Gus',	'Hank',	'Harley',	'Harvey',	'Hawkeye',	'Henry',	'Hoss',	'Huck',	'Hunter',	'Iggy',	'Ivan',	'Jack',	'Jackson',	'Jake',	'Jasper',	'Jax',	'Jesse',	'Joey',	'Johnny',	'Judge',	'Kane',	'King',	'Kobe',	'Koda',	'Lenny',	'Leo',	'Leroy',	'Levi',	'Lewis',	'Logan',	'Loki',	'Louie',	'Lucky',	'Luke',	'Marley',	'Marty',	'Maverick',	'Max',	'Maximus',	'Mickey',	'Miles',	'Milo',	'Moe',	'Moose',	'Morris',	'Murphy',	'Ned',	'Nelson',	'Nero',	'Nico',	'Noah',	'Norm',	'Oakley',	'Odie',	'Odin',	'Oliver',	'Ollie',	'Oreo',	'Oscar',	'Otis',	'Otto',	'Ozzy',	'Pablo',	'Parker',	'Peanut',	'Pepper',	'Petey',	'Porter',	'Prince',	'Quincy',	'Radar',	'Ralph',	'Rambo',	'Ranger',	'Rascal',	'Rebel',	'Reese',	'Reggie',	'Remy',	'Rex',	'Ricky',	'Rider',	'Riley',	'Ringo',	'Rocco',	'Rockwell',	'Rocky',	'Romeo',	'Rosco',	'Rudy',	'Rufus',	'Rusty',	'Sam',	'Sammy',	'Samson',	'Sarge',	'Sawyer',	'Scooby',	'Scooter',	'Scout',	'Scrappy',	'Shadow',	'Shamus',	'Shiloh',	'Simba',	'Simon',	'Smoky',	'Snoopy',	'Sparky',	'Spencer',	'Spike',	'Spot',	'Stanley',	'Stewie',	'Storm',	'Taco',	'Tank',	'Taz',	'Teddy',	'Tesla',	'Theo',	'Thor',	'Titus',	'TJ',	'Toby',	'Trapper',	'Tripp',	'Tucker',	'Tyler',	'Tyson',	'Vince',	'Vinnie',	'Wally',	'Walter',	'Watson',	'Willy',	'Winston',	'Woody',	'Wrigley',	'Wyatt',	'Yogi',	'Yoshi',	'Yukon',	'Zane',	'Zeus',	'Ziggy'],
@@ -245,15 +270,16 @@ let url = ""
             assignName(array) { // get random element from an array
                 this.rname = array[Math.floor(Math.random()*array.length)];
                 document.getElementById("dog-name").innerHTML = `${this.rname}`
+                names.push(`${this.rname}`)
             },
 
-            assignAge() {
-                this.age = Math.floor(Math.random() * 10) +1 // assign random age 
-                ages.push(this.age)
-                //console.log(age)
-                document.getElementById('age').innerHTML = `Age: ${this.age}`
+            // assignAge() {
+            //     this.age = Math.floor(Math.random() * 10) +1 // assign random age 
+            //     ages.push(this.age)
+            //     //console.log(age)
+            //     document.getElementById('age').innerHTML = `Age: ${this.age}`
 
-            },
+            // },
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             yatesShuffle(array) {// fisher yates shuffle: https://bost.ocks.org/mike/shuffle/
                 let m = array.length, t, i;
