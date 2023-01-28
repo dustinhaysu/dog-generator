@@ -57,7 +57,7 @@ fetch(BREEDS_URL)
             document.getElementById('dislikes').innerHTML='Dislikes: Baths, Entropy';
             document.getElementById('fun-fact').innerHTML='Additional Info: On every walk, has to visit that one spot where they found a piece of cheese on the ground six months ago.';
             document.getElementById('link').innerHTML = ''
-            document.getElementById('paragraph').innerHTML = 'Do you want to ogle dogs until your head explodes? Then you have come to the right place! This website generates dog pictures with simple bios. To get things started click the "select me!" dropdown box and choose a breed. Have fun and if you want to check out my profile <a href="https://dustin-hays.netlify.app/">click here</a>!'
+            document.getElementById('paragraph').innerHTML = 'Do you want to ogle dogs until your head explodes? Then you have come to the right place! This website generates dog pictures with simple bios. To get things started click the "select me!" dropdown box and choose a breed. Have fun and if you want to check out my website <a href="https://dustin-hays.netlify.app/">click here</a>!'
            
             return
         } 
@@ -93,7 +93,7 @@ fetch(BREEDS_URL)
 
 //paragraph build
 function paragraphNew() {
-    document.getElementById('paragraph').innerHTML = 'This site does not use cookies or a database. If you exit the app or refresh the page all your information will be lost.  consider yourself informed! If you would like to see my portfolio <a href="https://dustin-hays.netlify.app/">click here</a>.'
+    document.getElementById('paragraph').innerHTML = 'This site does not use cookies or a database. If you exit the app or refresh the page all your information will be lost.  consider yourself informed! If you would like to see my website <a href="https://dustin-hays.netlify.app/">click here</a>.'
 }
 // this breed again button build
     function hitMeAgain() {
@@ -167,7 +167,8 @@ function paragraphNew() {
             document.getElementById('MF').innerHTML =`S: Male` ;
             document.getElementById('likes').innerHTML='Likes: Ham, String Cheese';
             document.getElementById('dislikes').innerHTML='Dislikes: Baths, Entropy';
-            document.getElementById('fun-fact').innerHTML='Additional Info: On every walk, has to visit that one spot where they found a piece of cheese on the ground six months ago.';         
+            document.getElementById('fun-fact').innerHTML='Additional Info: On every walk, has to visit that one spot where they found a piece of cheese on the ground six months ago.';   
+            document.getElementById('paragraph').innerHTML = 'Do you want to ogle dogs until your head explodes? Then you have come to the right place! This website generates dog pictures with simple bios. To get things started click the "select me!" dropdown box and choose a breed. Have fun and if you want to check out my website <a href="https://dustin-hays.netlify.app/">click here</a>!'      
            
             return
 
