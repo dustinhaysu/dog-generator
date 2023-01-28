@@ -7,6 +7,7 @@ const select = document.querySelector('.breeds')
 const link = document.querySelector('#link')
 const img = document.getElementById('dog-img')
 let url = ""
+let breed = ''
 let count = -2
 
 // arrays for tracking through our dogs
@@ -44,7 +45,7 @@ fetch(BREEDS_URL)
 
     select.addEventListener('change', event => {
         //console.log(event.target.value)
-         breeds.push(event.target.value)
+         breed = event.target.value
         //console.log(breed)
          url = `https://dog.ceo/api/breed/${event.target.value}/images/random`
 
@@ -233,6 +234,7 @@ function paragraphNew() {
         }
 //post breed to DOM
         const getBreed =() => {
+            breeds.push(`Breed: ${breed}`)
             document.getElementById('dog-breed').innerHTML = `Breed: ${breeds[breeds.length-1]}`
         }
     
