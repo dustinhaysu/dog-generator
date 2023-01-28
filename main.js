@@ -75,7 +75,7 @@ fetch(BREEDS_URL)
         buttonDownBuild()
         buttonUpBuild()
         paragraphNew()
-        count = breeds.length-1
+        count = names.length-1
         //console.log(count, names[count])
                 
     })
@@ -87,7 +87,7 @@ fetch(BREEDS_URL)
         doggoInfo.assignLikes();
         doggoInfo.assignDislikes();
         doggoInfo.assignFunFact();
-        count = breeds.length-1
+        count = names.length-1
         //buttonDownBuild()
     })
 
